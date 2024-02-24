@@ -22,7 +22,16 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
-
+    protected $routeMiddleware = [
+        
+        'auth' => \App\Http\Middleware\Authenticate::class,
+        'admin' => \App\Http\Middleware\AdminMiddleware::class,
+        'manager' => \App\Http\Middleware\ManagerMiddleware::class,
+        'admin_manager' => \App\Http\Middleware\AdminAndManagerMiddleware::class,
+        'admin_manager_tecl' => \App\Http\Middleware\AdmManTecLMiddleware::class,
+        'techleader' => \App\Http\Middleware\TechLeaderMiddleware::class,
+        'dev' => \App\Http\Middleware\DevMiddleware::class,
+    ];
     /**
      * The application's route middleware groups.
      *
@@ -39,7 +48,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
