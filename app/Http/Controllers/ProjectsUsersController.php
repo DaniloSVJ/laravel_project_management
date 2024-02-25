@@ -41,7 +41,7 @@ class ProjectsUsersController extends Controller
     {
         $project = UserProject::find($id);
         if( $project){
-            return response()->json(project,404);
+            return response()->json(project,200);
         }
         return response()->json([
             'message'=>'Project not found'

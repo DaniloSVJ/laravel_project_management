@@ -36,12 +36,12 @@ class AuthControllerTest extends TestCase
     {
         $user = User::factory()->create([
             'email' => 'john@example.com',
-            'password' => bcrypt('password'),
+            'password' => bcrypt('1234567'),
         ]);
 
         $loginData = [
             'email' => 'john@example.com',
-            'password' => 'password',
+            'password' => '1234567',
         ];
 
         $response = $this->json('POST', '/api/login', $loginData);
@@ -56,16 +56,28 @@ class AuthControllerTest extends TestCase
 
     public function test_user_logout()
     {
-        $user = User::factory()->create();
-        $token = $user->createToken('TestToken')->plainTextToken;
-
+        $user = User::create([
+            'name' => 'John Doe',
+            'email' => 'john@example.com',
+            'password' => '1234567',
+        ]);
+        
+        $loginData = [
+            'email' => $user->email,
+            'password' => '1234567'
+        ];
+    
+        $login = $this->json('POST', '/api/login', $loginData);
+        $loginToken = $login['token']; // Supondo que o token seja retornado na resposta
+    
         $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $token,
+            'Authorization' => 'Bearer ' . $loginToken,
         ])->json('POST', '/api/logout');
-
+            
         $response->assertStatus(Response::HTTP_OK)
             ->assertJson([
                 'message' => 'Logout successful!'
             ]);
     }
+    
 }

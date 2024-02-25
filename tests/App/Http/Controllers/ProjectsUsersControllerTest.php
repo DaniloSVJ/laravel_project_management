@@ -6,6 +6,10 @@ use App\Models\UserProject;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
+use App\Models\Project;
+
+
 
 class ProjectsUsersControllerTest extends TestCase
 {
@@ -13,34 +17,67 @@ class ProjectsUsersControllerTest extends TestCase
 
     public function test_index_method_returns_all_user_projects()
     {
-        UserProject::factory()->count(3)->create();
 
-        $response = $this->get('/projects_users');
+        $user = User::factory()->create();
+        $projectId = Project::withoutEvents(function () {
+            return Project::factory()->create()->id;
+        });
+        $token = $user->createToken('Bearer Token')->plainTextToken;
 
-        $response->assertStatus(200)
-            ->assertJsonCount(3);
+         //Alocando usuarios a um projeto
+        UserProject::create([
+            "users_id"=> $user->id,
+            "project_id"=>$projectId
+        ]);
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ])->json('GET', '/api/project_user');
+   
+        $response->assertStatus(200);
+
     }
 
     public function test_store_method_creates_new_user_project()
     {
+        $user = User::factory()->create(["roles"=>"admin"]);
+
+        $projectId = Project::withoutEvents(function () {
+            return Project::factory()->create()->id;
+        });
+
+        $token = $user->createToken('Bearer Token')->plainTextToken;
+
         $userProjectData = [
-            "user_id" => 1,
-            "project_id" => 1,
+            "users_id" =>  $user->id,
+            "project_id" => $projectId,
             // Add other required fields as needed
         ];
 
-        $response = $this->post('/projects_users', $userProjectData);
-
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ])->json('POST', '/api/project_user',$userProjectData);
+   //dd( $response);
         $response->assertStatus(201)
             ->assertJsonFragment(['message' => 'User successfully introduced into the project']);
     }
 
     public function test_show_method_returns_specific_user_project()
     {
-        $userProject = UserProject::factory()->create();
+        $user = User::factory()->create();
+        $projectId = Project::withoutEvents(function () {
+            return Project::factory()->create()->id;
+        });
+        $token = $user->createToken('Bearer Token')->plainTextToken;
 
-        $response = $this->get("/projects_users/{$userProject->id}");
-
+         //Alocando usuarios a um projeto
+        $projectuser = UserProject::create([
+            "users_id"=> $user->id,
+            "project_id"=>$projectId
+        ]);
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ])->json('GET', '/api/project_user/'.$projectuser->id);
+        // dd($response);
         $response->assertStatus(200)
             ->assertJsonFragment(['id' => $userProject->id]);
     }
@@ -48,25 +85,39 @@ class ProjectsUsersControllerTest extends TestCase
     public function test_update_method_updates_existing_user_project()
     {
         $userProject = UserProject::factory()->create();
-
+        $user = User::factory()->create();
+        $projectId = Project::withoutEvents(function () {
+            return Project::factory()->create()->id;
+        });
         $updatedData = [
-            "user_id" => 2,
-            "project_id" => 2,
-            // Add other fields as needed
+                "users_id"=> $user->id,
+                "project_id"=>$projectId
         ];
-
-        $response = $this->put("/projects_users/{$userProject->id}", $updatedData);
-
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ])->json('PUT', '/api/project_user/'.$userProject ->id, $updatedData);
+      
         $response->assertStatus(200)
-            ->assertJsonFragment(['user_id' => 2]);
+            ->assertJsonFragment(['id' => $userProject ->id]);
     }
 
     public function test_destroy_method_deletes_existing_user_project()
     {
-        $userProject = UserProject::factory()->create();
+        $user = User::factory()->create();
+        $projectId = Project::withoutEvents(function () {
+            return Project::factory()->create()->id;
+        });
+        $token = $user->createToken('Bearer Token')->plainTextToken;
 
-        $response = $this->delete("/projects_users/{$userProject->id}");
-
+         //Alocando usuarios a um projeto
+        $updatedData = UserProject::create([
+            "users_id"=> $user->id,
+            "project_id"=>$projectId
+        ]);
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ])->json('DELETE', '/api/project_user/'.$userProject ->id);
+      
         $response->assertStatus(200)
             ->assertJsonFragment(['message' => 'Association dissolved']);
     }
