@@ -13,13 +13,9 @@ class AuthController extends Controller
 {
     public function reguser(Request $request)
     {
-    //   
-       
-        
+         
         $user = User::create($request->all());
       
-      
-
         return response()->json([
             'message' => 'User registered successfully!'
         ], 201);
