@@ -18,7 +18,7 @@ Vá para o site oficial do MySQL (https://dev.mysql.com/downloads/) e faça o do
 
 **project_management**
 
-### Crie um arquivo .env . Cole todas as informações que estão no arquivo ‘.env.exemple’. Voce pode também se quiser em vez criar **.env**, da copiar e colar ‘.env.exemple’, e renomear a copia para “.env”. 
+Crie um arquivo .env . Cole todas as informações que estão no arquivo ‘.env.exemple’. Voce pode também se quiser em vez criar **.env**, da copiar e colar ‘.env.exemple’, e renomear a copia para “.env”. 
 
 Crie todas as tabelas do banco com o comando abaixo:
 **php artisan migration**
@@ -45,19 +45,26 @@ Abra o postman e import a coleção rest que foi enviada por email, nela vai con
 ## END POINTS:
 
 **Criação de usuários:**
+
 método: POST
+
 **_http://127.0.0.1:8000/register_**
 
 _parametro body_:
+
 {
     "name": "Nome do usuário",
     "email": "emaildosuario@g.com",
     "password": "senhadosuario",
     "roles": "admin | manager | techleader | dev" //Se não colocar, por padrão fica usuário dev 
 }
+
 _response_:
+
 status:200
+
 message:
+
 {
     "message": "User registered successfully!"
 }
@@ -75,7 +82,9 @@ _parametro body_:
     "email": "emaildosuario@g.com",
 }
 _response_:
+
 status:200
+
 message:
 {
     "id": 380,
@@ -109,16 +118,18 @@ _parametro body_:
 
 }
 
-
-
 _response_:
+
 status:200
+
 message:
+
 {
     "message": "Project registered successfully"
 }
 
 **Atualização de Projetos**
+
 método: PUT
 
 **_http://127.0.0.1:8000/Project/{id}_**
@@ -128,6 +139,7 @@ Para criar o projeto vc precisa logar com um usuário admin ou gerente. Somente 
 
 
 _parametro body_:
+
 {
     "title": "Título do Projeto",
     "description": "Descrição do Projeto",
@@ -139,8 +151,11 @@ _parametro body_:
 
 
 _response_:
+
 status:200
+
 message:
+
 {
     "message": "Project registered successfully"
 }
