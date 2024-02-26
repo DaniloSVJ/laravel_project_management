@@ -1,3 +1,4 @@
+## Introdução:
 Para executar o projeto primeiro vc precisa instalar o composer. Você pode baixá-lo e instalá-lo seguindo as instruções do site oficial do Composer: https://getcomposer.org/download/
 
 Agora vc também precisa instalar o laravel. Use o comando abaixo:
