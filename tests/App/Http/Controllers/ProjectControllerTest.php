@@ -22,6 +22,8 @@ class ProjectControllerTest extends TestCase
      *
      * @return void
      */
+
+    # php artisan test --filter=AuthControllerTest::test_index_projects_for_authenticated_users
     public function test_index_projects_for_authenticated_users()
     {
         $user = User::factory()->create();
@@ -50,6 +52,8 @@ class ProjectControllerTest extends TestCase
      *
      * @return void
      */
+   
+    # php artisan test --filter=AuthControllerTest::test_show_specific_project_for_authenticated_users
     public function test_show_specific_project_for_authenticated_users()
     {
         $user = User::factory()->create();
@@ -77,6 +81,9 @@ class ProjectControllerTest extends TestCase
      *
      * @return void
      */
+
+
+    # php artisan test --filter=AuthControllerTest::test_create_project_for_authorized_users
     public function test_create_project_for_authorized_users()
     {
         $user = User::factory()->create(['roles' => 'admin']);
@@ -100,6 +107,8 @@ class ProjectControllerTest extends TestCase
      *
      * @return void
      */
+
+    # php artisan test --filter=AuthControllerTest::test_update_existing_project_for_authorized_users
     public function test_update_existing_project_for_authorized_users()
     {
         $user = User::factory()->create(['roles' => 'dev']);
@@ -123,6 +132,8 @@ class ProjectControllerTest extends TestCase
      *
      * @return void
      */
+
+    # php artisan test --filter=AuthControllerTest::test_delete_existing_project_for_authorized_users
     public function test_delete_existing_project_for_authorized_users()
     {
         $user = User::factory()->create(['roles'=>'manager']);
@@ -149,6 +160,8 @@ class ProjectControllerTest extends TestCase
      *
      * @return void
      */
+
+    # php artisan test --filter=AuthControllerTest::test_index_user_projects_for_authenticated_users
     public function test_index_user_projects_for_authenticated_users()
     {
         $user = User::factory()->create(['roles'=>'manager']);
@@ -181,6 +194,8 @@ class ProjectControllerTest extends TestCase
      *
      * @return void
      */
+
+    # php artisan test --filter=AuthControllerTest::test_show_user_projects_for_authenticated_users
     public function test_show_user_projects_for_authenticated_users()
     {
         $user = User::factory()->create(['roles'=>'manager']);
