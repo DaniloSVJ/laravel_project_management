@@ -13,6 +13,7 @@ class TaskControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
+    # php artisan test --filter=AuthControllerTest::test_index_method_returns_all_tasks
     public function test_index_method_returns_all_tasks()
     {
         $user = User::factory()->create();
@@ -39,6 +40,7 @@ class TaskControllerTest extends TestCase
 
     }
 
+    # php artisan test --filter=AuthControllerTest::test_store_method_creates_new_task
     public function test_store_method_creates_new_task()
     {
         $user = User::factory()->create(['roles' => 'admin']);
@@ -69,6 +71,7 @@ class TaskControllerTest extends TestCase
 
     }
 
+    # php artisan test --filter=AuthControllerTest::test_show_method_returns_specific_task
     public function test_show_method_returns_specific_task()
     {
         $user = User::factory()->create();
@@ -95,6 +98,7 @@ class TaskControllerTest extends TestCase
             ->assertJsonFragment(['id' => $task->id]);
     }
 
+    # php artisan test --filter=AuthControllerTest::test_update_method_updates_existing_task
     public function test_update_method_updates_existing_task()
     {
         $user = User::factory()->create(['roles' => 'admin']);
@@ -122,6 +126,7 @@ class TaskControllerTest extends TestCase
             ->assertJsonFragment(['title' => 'Updated Task Title']);
     }
 
+    # php artisan test --filter=AuthControllerTest::test_destroy_method_deletes_existing_task
     public function test_destroy_method_deletes_existing_task()
     {
         $user = User::factory()->create(['roles' => 'admin']);
