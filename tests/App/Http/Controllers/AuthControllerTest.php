@@ -12,6 +12,7 @@ class AuthControllerTest extends TestCase
 {
     use DatabaseTransactions; // Isso reinicializa o banco de dados após cada teste
 
+    # php artisan test --filter=AuthControllerTest::test_user_registration
     public function test_user_registration()
     {
         $userData = [
@@ -32,6 +33,7 @@ class AuthControllerTest extends TestCase
         ]);
     }
 
+    # php artisan test --filter=AuthControllerTest::test_user_login
     public function test_user_login()
     {
         $user = User::factory()->create([
@@ -53,7 +55,7 @@ class AuthControllerTest extends TestCase
                 'token'
             ]);
     }
-
+    # php artisan test --filter=AuthControllerTest::test_user_logout
     public function test_user_logout()
     {
         $user = User::create([
@@ -74,6 +76,7 @@ class AuthControllerTest extends TestCase
             'Authorization' => 'Bearer ' . $loginToken,
         ])->json('POST', '/api/logout');
             
+     
         $response->assertStatus(Response::HTTP_OK)
             ->assertJson([
                 'message' => 'Logout successful!'
