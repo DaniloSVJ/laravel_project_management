@@ -6,7 +6,10 @@ use App\Http\Controllers\ProjectsUsersController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use L5Swagger\Http\Controllers\SwaggerController;
 
+Route::get('api/documentation', [SwaggerController::class, 'api'])->name('l5-swagger.api');
+Route::get('api/documentation/docs', [SwaggerController::class, 'docs'])->name('l5-swagger.docs');
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,7 +32,7 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
     Route::get('/project',[ProjectController::class, 'index']);
     Route::get('/project/{id}',[ProjectController::class, 'show']);
     Route::get('/projectsusers/{id}',[ProjectController::class, 'showUserProjects']);
-    Route::get('/projectsusers',[ProjectController::class, 'indexUserProjects']);
+    Route::get('/projectsusers',[ProjectController::class, 'allUserProjects']);
 
     Route::get('/tasks',[TaskController::class, 'index']);
     Route::get('/tasks/{id}',[TaskController::class, 'show']);

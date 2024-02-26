@@ -43,132 +43,29 @@ Abra o postman e import a coleção rest que foi enviada por email, nela vai con
 
 **UserProject**: está tabela guarda o id do projeto e o id dos usuarios associado ao projeto. Como a relação entre o projeto e usuários é muito para muitos, ela é uma tabela intermediaria para assim alocar os usuários que farão parte do projeto. 
 
-## END POINTS:
+## Teste Automatizados
 
-**Criação de usuários:**
+O projeto tem todos os teste automatizados. Para executar digite os comando conforme abaixo:
 
-método: POST
+- Executar todos os teste:
+$ php artisan test
 
-**_http://127.0.0.1:8000/register_**
+- Test Controller AuthController
+$ php artisan test --filter=AuthControllerTest
 
-_parametro body_:
+- Test Controller ProjectController
+$ php artisan test --filter=ProjectControllerTest
 
-{
-    "name": "Nome do usuário",
-    "email": "emaildosuario@g.com",
-    "password": "senhadosuario",
-    "roles": "admin | manager | techleader | dev" //Se não colocar, por padrão fica usuário dev 
-}
+- Test Controller ProjectsUsersController
+$ php artisan test --filter=ProjectsUsersController
 
-_response_:
+- Test Controller TaskController
+$ php artisan test --filter=TaskControllerTest
 
-status:200
+Você tambem pode executar cada metodo de cada teste em particular
+Exemplo:
+$ php artisan test --filter=AuthControllerTest::test_user_logout
 
-message:
-
-{
-    "message": "User registered successfully!"
-}
-
-
-**Login de usuários:**
-
-método: POST
-
-**_http://127.0.0.1:8000/login_**
-
-_parametro body_:
-{
-    "name": "Nome do usuário",
-    "email": "emaildosuario@g.com",
-}
-_response_:
-
-status:200
-
-message:
-{
-    "id": 380,
-    "name": "Nome do usuário",
-    "token": "254|0KbfrlmSvnGph0jUetRcKCUUV37iNIkHE7RTGHIG80cd291b"
-}
-
-**LogOut de usuários:**
-
-método: POST
-
-**_http://127.0.0.1:8000/logout_**
-
-Precisa colocar o token o token do usuário que você quer deslogar
-
-**Criação de Projetos**
-método: POST
-
-**_http://127.0.0.1:8000/projetc_**
-
-Rota autenticada. Bearer token de usuário admin ou manager.
-Para criar o projeto vc precisa logar com um usuário admin ou gerente. Somente eles podem criar, atualizar e excluir projetos. 
-
-
-_parametro body_:
-{
-    "title": "Título do Projeto",
-    "description": "Descrição do Projeto",
-     "start_date": "2022-02-26",
-    "term_of_delivery": "2022-02-29",
-
-}
-
-_response_:
-
-status:200
-
-message:
-
-{
-    "message": "Project registered successfully"
-}
-
-**Atualização de Projetos**
-
-método: PUT
-
-**_http://127.0.0.1:8000/Project/{id}_**
-
-Rota autenticada. Bearer token de usuário admin ou manager.
-Para criar o projeto vc precisa logar com um usuário admin ou gerente. Somente eles podem criar, atualizar e excluir projetos. 
-
-
-_parametro body_:
-
-{
-    "title": "Título do Projeto",
-    "description": "Descrição do Projeto",
-     "start_date": "2022-02-26",
-    "term_of_delivery": "2022-02-29",
-
-}
-
-
-
-_response_:
-
-status:200
-
-message:
-
-{
-    "message": "Project registered successfully"
-}
-
-
-
-
-
-
-
-
-
-
+Nos arquivo de test dexei no comentario os comando para executar test de um metodo em particular
 
 

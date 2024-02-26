@@ -14,31 +14,28 @@ class ProjectController extends Controller
         $userProjects = User::join('user_projects', 'users.id', '=', 'user_projects.users_id')
             ->join('project', 'user_projects.project_id', '=', 'project.id')
             ->where('project.id', $projectrId)
-            ->select('project.title', 'project.description',  'users.name')
+            ->select('project.title', 'project.description', 'project.start_date', 'project.term_of_delivery',   'users.name')
             ->get();
 
         return response()->json($userProjects);
     }
-    public function indexUserProjects()
+    public function allUserProjects()
     {
         $userProjects = User::join('user_projects', 'users.id', '=', 'user_projects.users_id')
             ->join('project', 'user_projects.project_id', '=', 'project.id')
-            ->select('project.title', 'project.description',  'users.name')
+            ->select('project.title', 'project.description', 'project.start_date', 'project.term_of_delivery',   'users.name')
             ->get();
 
         return response()->json($userProjects);
     }
-    /**
-     * Display a listing of the resource.
-     */
+
+    
     public function index()
     {
         return Project::all();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
         if( Project::create($request->all())){
@@ -106,7 +103,7 @@ class ProjectController extends Controller
         if( $project){
             Project::destroy($id);
             return response()->json([
-                'message'=>'Project deleted successfully'
+                'message'=>'Project deleted successfully!'
             ],200);
             
         }

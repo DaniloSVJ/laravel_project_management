@@ -39,12 +39,12 @@ class ProjectsUsersController extends Controller
      */
     public function show( $id)
     {
-        $project = UserProject::find($id);
-        if( $project){
-            return response()->json(project,200);
+        $project_user = UserProject::find($id);
+        if( $project_user){
+            return response()->json($project_user,200);
         }
         return response()->json([
-            'message'=>'Project not found'
+            'message'=>'Association not found'
         ],404);
     
     }
@@ -54,15 +54,15 @@ class ProjectsUsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $project = Project::find($id);
-        if( $project){
-            $project->update($request->all());
-
-            return $project;
+        $project_user = UserProject::find($id);
+        if( $project_user){
+            $project_user->update($request->all());
+            return response()->json($project_user,200);
+            
         }
         return response()->json([
             'message'=>'Association not found'
-        ]);
+        ],404);
         
      
     }
@@ -72,9 +72,9 @@ class ProjectsUsersController extends Controller
      */
     public function destroy($id)
     {
-        $project = Project::find($id);
-        if( $project){
-            Project::destroy($id);
+        $project_user = UserProject::find($id);
+        if( $project_user){
+            UserProject::destroy($id);
 
             return response()->json([
                 'message'=>'Association dissolved'

@@ -21,7 +21,7 @@ class TaskFactory extends Factory
             "title"=> "Projeto Novo",
             "description"=>"Projeto Novo",
             "status"=>"inicio",
-            "responsable"=>User::factory(),
+            "responsable"=>User::factory()->create(),
             "project_id"=>Project::withoutEvents(function () {
                 return Project::factory()->create()->id;
             }),

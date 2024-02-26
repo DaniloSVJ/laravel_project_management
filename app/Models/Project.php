@@ -20,7 +20,7 @@ class Project extends Model
         parent::boot();
 
         static::deleting(function ($project) {
-            // Criando uma nova atividade antes de excluir o projeto
+            // Criando uma nova atividade antes  registrando a exclusão do projeto
             $activity = new Activity();
             $activity->action = 'delete';
             $activity->description = 'Titulo do Projeto: ' . $project->title.'. Id projeto: '.$project->id;

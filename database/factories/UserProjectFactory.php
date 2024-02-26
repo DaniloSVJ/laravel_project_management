@@ -3,7 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-
+use App\Models\Project;
+use App\Models\User;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\UserProject>
  */
@@ -17,7 +18,7 @@ class UserProjectFactory extends Factory
     public function definition(): array
     {
         return [
-            "users_id"=>User::factory(),
+            "users_id"=>User::factory()->create(),
             "project_id"=>Project::withoutEvents(function () {
                 return Project::factory()->create()->id;
             })
