@@ -15,6 +15,7 @@ class ProjectsUsersControllerTest extends TestCase
 {
     use DatabaseTransactions;
 
+    # php artisan test --filter=AuthControllerTest::test_index_method_returns_all_user_projects
     public function test_index_method_returns_all_user_projects()
     {
 
@@ -37,6 +38,7 @@ class ProjectsUsersControllerTest extends TestCase
 
     }
 
+    # php artisan test --filter=AuthControllerTest::test_store_method_creates_new_user_project
     public function test_store_method_creates_new_user_project()
     {
         $user = User::factory()->create(["roles"=>"admin"]);
@@ -61,6 +63,7 @@ class ProjectsUsersControllerTest extends TestCase
             ->assertJsonFragment(['message' => 'User successfully introduced into the project']);
     }
 
+    # php artisan test --filter=AuthControllerTest::test_show_method_returns_specific_user_project
     public function test_show_method_returns_specific_user_project()
     {
         $user = User::factory()->create();
@@ -74,18 +77,23 @@ class ProjectsUsersControllerTest extends TestCase
             "users_id"=> $user->id,
             "project_id"=>$projectId
         ]);
+
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
         ])->json('GET', '/api/project_user/'.$projectuser->id);
-        // dd($response);
+       
         $response->assertStatus(200)
-            ->assertJsonFragment(['id' => $userProject->id]);
+            ->assertJsonFragment(['id' => $projectuser->id]);
     }
-
+    
+    # php artisan test --filter=AuthControllerTest::test_update_method_updates_existing_user_project
     public function test_update_method_updates_existing_user_project()
     {
         $userProject = UserProject::factory()->create();
-        $user = User::factory()->create();
+        $user = User::factory()->create(['roles'=>'techleader']);
+
+        $token = $user->createToken('Bearer Token')->plainTextToken;
+
         $projectId = Project::withoutEvents(function () {
             return Project::factory()->create()->id;
         });
@@ -101,16 +109,17 @@ class ProjectsUsersControllerTest extends TestCase
             ->assertJsonFragment(['id' => $userProject ->id]);
     }
 
+    # php artisan test --filter=AuthControllerTest::test_destroy_method_deletes_existing_user_project
     public function test_destroy_method_deletes_existing_user_project()
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create(['roles'=>'techleader']);
         $projectId = Project::withoutEvents(function () {
             return Project::factory()->create()->id;
         });
         $token = $user->createToken('Bearer Token')->plainTextToken;
 
          //Alocando usuarios a um projeto
-        $updatedData = UserProject::create([
+        $userProject = UserProject::create([
             "users_id"=> $user->id,
             "project_id"=>$projectId
         ]);
