@@ -4,7 +4,7 @@ Agora vc também precisa instalar o laravel. Use o comando abaixo:
 
 $**_composer global require laravel/installer_**
 
-##Título de Tamanho Grande agora instale as libs do projeto com o comando abaixo##
+# Título de Tamanho Grande agora instale as libs do projeto com o comando abaixo
 $ **composer install** 
 
 # Chegou a hora de instalar o mysql. 
