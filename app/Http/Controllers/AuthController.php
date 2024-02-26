@@ -35,7 +35,6 @@ class AuthController extends Controller
            
         }
         $user = Auth::user();
-        // dd($user);
         $token = $user->createToken('Bearer Token', ['expires_in' => 10080])->plainTextToken;
         return response()->json([
             'id' => $user->id,
@@ -48,8 +47,8 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-
+        Auth::logout();
+    
         return response()->json([
             'message' => 'Logout successful!'
         ]);
